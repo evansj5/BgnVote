@@ -3,7 +3,7 @@ define([
   'underscore',
   'backbone',
   'text!./templates/displayVotesComponentTemplate.html',
-  'app/models/GameNightInstanceResultsModel'
+  'app/models/gameNightInstanceResultsModel'
 ], function($, _, Backbone, 
 		DisplayVotesTemplate,
 		GameNightInstanceResultsModel){
