@@ -1,0 +1,22 @@
+<% if(options.selectable) { %>
+	<h1><%= options.selectedHeader %></h1>
+	<ul>
+		<% _.each(selectedGames, function(game){ %>
+		   <li>
+		   		<img src='<%= game.get("thumbnail") %>' />
+		   		<div class='gameName'><%= game.get("name") %></div>
+		   </li>
+	  	<% }); %>
+  	</ul>
+  	<button class='confirmSelectionsButton'><%= options.confirmSelectionsButtonLabel %></button>
+<% } %>
+
+<h1><%= options.headerText %></h1>
+<% if(options.searchable) { %>
+<input id="gameListFilter" type="text"/>
+<% } %>
+<ul id="game-list-sortable">
+  <% _.each(games, function(game){ %>
+    <li><img src='<%= game.get("thumbnail") %>' /><div class='gameName' data-id="<%= game.get("id") %>"><%= game.get("name") %></div><% if(options.selectable) { %><button data-id="<%= game.get("id") %>" class="selectButton"><%= options.selectButtonLabel %></button><% } %></li>
+  <% }); %>
+</ul>

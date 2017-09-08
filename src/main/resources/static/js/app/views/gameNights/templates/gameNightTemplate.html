@@ -1,0 +1,20 @@
+<div>
+ID: <%= gameNight.get("id") %>
+<br/>
+Date: <%= $.datepicker.formatDate("M d, yy", new Date(gameNight.get("startDate"))) %>
+</div>
+<table id="gameNightInstancesTable">
+	<thead>
+		<th>Id</th>
+		<th>Date</th>
+		<th>State</th>
+	</thead>
+	<% _.each(instanceModels, function (instance) { %>		
+			<tr>			
+				<td><a href="#gameNightInstance/<%= instance.get("id") %>"><%= instance.get("id") %></a></td>
+				<td><%= $.datepicker.formatDate("M d, yy", new Date(instance.get("date"))) %></td>
+				<td><%= instance.get("state") %></td>				
+			</tr>
+		</a>
+	<% }); %>
+</table>

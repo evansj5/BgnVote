@@ -1,0 +1,22 @@
+<table>
+<thead>
+<th>First Name</th>
+<th>Last Name</th>
+<% if(options.selectable) { %>
+<th></th>
+<% } %>
+</thead>
+<% _.each(options.users, function (user) { %>
+	<tr>
+		<td><%= user.get("firstName") %></td>
+		<td><%= user.get("lastName") %></td>
+		
+		<% if(options.selectable) { %>
+			<td><button class="userInviteButton" data-id="<%= user.get("id") %>"><%= options.selectButtonLabel %></button>
+		<% } %>	
+	</tr>
+<% }); %>
+</table>
+<% if(options.selectable && options.showConfirmButton) { %>
+<button class="confirmSelections"><%= options.confirmSelectionsButtonLabel %></button>
+<% } %>

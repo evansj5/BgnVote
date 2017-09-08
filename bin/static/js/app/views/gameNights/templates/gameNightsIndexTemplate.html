@@ -1,0 +1,15 @@
+<a class="button" href="#scheduleGameNight">Schedule Game Night</a>
+<table id="gameNightsTable">
+  <thead>
+    <th>Id</th>
+    <th>Date</th>
+    <th>RepeatDays</th>
+  </thead>
+  <% _.each(gameNights, function(gameNight) { %>
+    <tr>
+      <td><%= gameNight.get("id") %></td>
+      <td><a href="#gamenight/<%= gameNight.get("id") %>"><%= $.datepicker.formatDate("M d, yy", new Date(gameNight.get("startDate"))) %></a></td>
+      <td><%= gameNight.get("repeatDays") %></td>
+    </tr>
+  <% }); %>
+</table>

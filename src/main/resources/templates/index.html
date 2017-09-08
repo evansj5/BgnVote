@@ -1,0 +1,19 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title></title>
+		<script th:attr="data-main=@{/js/app/main.js}" th:src="@{/js/require.js}"></script>
+		<link rel="stylesheet" th:href="@{/css/jquery-ui.css}" />
+		<link rel="stylesheet" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+		<link rel="stylesheet" th:href="@{/css/skeleton.css}" />
+		<script src="jquery.ui.touch-punch.min.js"></script>
+		<th:block th:include="sharedHead :: head"></th:block>
+	</head>
+	<body>
+		<div class="container">
+			<th:block th:include="sharedHeader :: header"></th:block>
+			<div id="page">
+				Loading...
+			</div>
+		</div>
+	</body>
+</html>
