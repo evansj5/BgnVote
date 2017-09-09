@@ -10,13 +10,17 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import model.User;
 import repository.UserRepository;
 import viewmodel.user.UserViewModel;
 
 @Component
+@Service
 public class UserService implements IUserService{
 	@Autowired
 	UserRepository userRepository;
@@ -48,4 +52,12 @@ public class UserService implements IUserService{
 				.map(user -> this.mapper.map(user, UserViewModel.class))
 				.collect(Collectors.toList());
 	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		User user = this.userRepository.findOneByUsername(username);
+		return user;
+	}
+	
+	
 }

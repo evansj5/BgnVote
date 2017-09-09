@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Register</title>
+		<link rel="stylesheet" th:href="@{/css/jquery-ui.css}" />
+		<link rel="stylesheet" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+		<link rel="stylesheet" th:href="@{/css/skeleton.css}" />
+		<link rel="stylesheet" th:href="@{/css/jquery.toast.min.css}" />
+		<script th:src="@{/js/lib/jquery.js}" />
+		<script th:src="@{/js/lib/jquery.toast.min.js}" />
+		<script th:src="@{/js/lib/registrationPage.js}" />
+	</head>
+	<body>
+		<div class="container">
+			<form action="/register" method="POST">
+				<div class="row"><div class="four columns offset-by-four"><h1>Registration</h1></div></div>
+				<div class="row"><input name="username" id="username" class="four columns offset-by-four" type="text" placeholder="Username" /> *</div>
+				<div class="row"><input name="password" id="password" class="four columns offset-by-four" type="password" placeholder="Password" /> *</div>
+				<div class="row"><input name="confirmPassword" id="confirmPassword" class="four columns offset-by-four" type="password" placeholder="Confirm Password" /> *</div>
+				<div class="row"><input name="firstName" id="firstName" class="four columns offset-by-four" type="text" placeholder="First Name"/></div>
+				<div class="row"><input name="lastName" id="lastName" class="four columns offset-by-four" type="text" placeholder="Last Name"/></div>				
+				<div class="row"><input name="email" id="email" class="four columns offset-by-four" type="text" placeholder="Email Address" /> *</div>
+				<div class="row"><input name="bggUsername" id="bggUsername" class="four columns offset-by-four" type="text" placeholder="BoardGameGeek Username" /></div>
+				<div class="row"><input name="regKey" id="regKey" class="four columns offset-by-four" type="text" placeholder="Registration Key" /> *</div>
+				<div class="row"><button id="submitButton" class="two columns offset-by-six" type="submit">Register</button></div>
+			</form>
+		</div>
+	</body>
+</html>

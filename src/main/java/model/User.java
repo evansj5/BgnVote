@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,15 +12,19 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 
 
 @Entity(name="users")
-public class User {
+public class User implements UserDetails{
 	@Id	
 	@SequenceGenerator(name="USERS_id_seq",
 						sequenceName="USERS_id_seq",
 						allocationSize=1)
-	@GeneratedValue(strategy=GenerationType.SEQUENCE,
+	@GeneratedValue(strategy=GenerationType.IDENTITY,
 					generator="USERS_id_seq")
 	@Column(name="id", updatable=false)
 	private Integer id;
@@ -36,6 +42,10 @@ public class User {
 	private String bggUsername;
 	
 	private String username;
+	
+	private String password;
+	
+	private String email;
 	
 	@OneToMany(mappedBy = "user")
 	private List<GameNightUser> gameNights;
@@ -90,4 +100,58 @@ public class User {
 	public void setBggUsername(String bggUsername) {
 		this.bggUsername = bggUsername;
 	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public List<GameNightUser> getGameNights() {
+		return gameNights;
+	}
+
+	public void setGameNights(List<GameNightUser> gameNights) {
+		this.gameNights = gameNights;
+	}
+
+	public List<GameNightInstanceBoardGame> getNominatedBoardGames() {
+		return nominatedBoardGames;
+	}
+
+	public void setNominatedBoardGames(List<GameNightInstanceBoardGame> nominatedBoardGames) {
+		this.nominatedBoardGames = nominatedBoardGames;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<? extends GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"));
+		
+		return authorities;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return enabled;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return enabled;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return enabled;
+	}	
 }

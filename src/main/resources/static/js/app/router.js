@@ -10,7 +10,8 @@ define([
 		 'app/models/profileModel',
 		 'app/models/gameNightModel',
 		 'app/views/gameNights/gameNightInstanceView',
-		 'app/models/gameNightInstanceModel'],
+		 'app/models/gameNightInstanceModel',
+		 'app/views/admin/adminView'],
 		 function(
 		$, 
 		_, 
@@ -23,7 +24,8 @@ define([
 		ProfileModel,
 		GameNightModel,
 		GameNightInstanceView,
-		GameNightInstanceModel
+		GameNightInstanceModel,
+		AdminView
 			) {
 			var AppRouter = Backbone.Router.extend({
 				routes : {
@@ -33,6 +35,7 @@ define([
 					'gamenight/:id' : 'gamenight',
 					'scheduleGameNight': 'scheduleGameNight',
 					'gameNightInstance/:id': 'gameNightInstance',
+					'admin': 'admin',
 					// default
 					'*path' : 'defaultAction'
 				}
@@ -97,6 +100,13 @@ define([
 				app_router.on("route:scheduleGameNight", function () {
 					var scheduleGameNightView = new ScheduleGameNightView();
 					scheduleGameNightView.render();
+				});
+				
+				app_router.on("route:admin", function () {
+					var adminView = new AdminView({
+						el: "#page"
+					});
+					adminView.render();
 				});
 
 				Backbone.history.start();

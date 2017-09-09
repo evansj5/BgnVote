@@ -12,4 +12,5 @@ import model.User;
 public interface UserRepository extends JpaRepository<User, Integer>{
 	User findOneByUsername(String username);
 	List<User> findAllByIdIn(Collection<Integer> ids, Sort sort);
+	User findOneByEmail(String email);
 }
