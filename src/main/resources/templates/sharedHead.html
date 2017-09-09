@@ -2,6 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head th:fragment="head">
+    	<script th:attr="data-main=@{/js/app/main.js}" th:src="@{/js/require.js}"></script>
+		<link rel="stylesheet" th:href="@{/css/jquery-ui.css}" />
+		<link rel="stylesheet" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+		<link rel="stylesheet" th:href="@{/css/skeleton.css}" />
+		<script src="jquery.ui.touch-punch.min.js"></script>
     </head>
     <body>
 
