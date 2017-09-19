@@ -4,12 +4,14 @@
     <th>Id</th>
     <th>Date</th>
     <th>RepeatDays</th>
+    <th>Actions</th>
   </thead>
   <% _.each(gameNights, function(gameNight) { %>
-    <tr>
+    <tr data-id="<%= gameNight.get("id") %>">
       <td><%= gameNight.get("id") %></td>
       <td><a href="#gamenight/<%= gameNight.get("id") %>"><%= $.datepicker.formatDate("M d, yy", new Date(gameNight.get("startDate"))) %></a></td>
       <td><%= gameNight.get("repeatDays") %></td>
+      <td><button class="deleteGameNight">Delete</button>
     </tr>
   <% }); %>
 </table>

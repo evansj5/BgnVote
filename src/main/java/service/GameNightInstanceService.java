@@ -44,6 +44,9 @@ public class GameNightInstanceService implements IGameNightInstanceService {
 	IGameNightInstanceUserRepository gameNightInstanceUserRepository;
 	
 	@Autowired
+	IGameNightInstanceBoardGameVoteRepository gameNightInstanceBoardGameVoteRepository;
+	
+	@Autowired
 	IGameNightService gameNightService;
 	
 	@Autowired
@@ -274,6 +277,32 @@ public class GameNightInstanceService implements IGameNightInstanceService {
 		return resultDto;
 	}
 	
+	
+	
+	@Override
+	public void deleteAllForGameNight(String id) {
+		List<GameNightInstanceViewModel> instances = this.getAllInstancesForGameNight(id);
+		instances.forEach(i -> deleteInstance(i.getId()));		
+	}
+	
+	private void deleteInstance(String instanceId) {
+		GameNightInstance instance = this.gameNightInstanceRepository.findOne(instanceId);
+		List<GameNightInstanceBoardGame> games = this.gameNightInstanceBoardGameRepository.findAllByGameNightInstanceId(instanceId);
+		
+		games.forEach(g -> {
+			List<GameNightInstanceBoardGameVote> votes = this.gameNightInstanceBoardGameVoteRepository.findAllByGameIdOrderByUserIdAsc(g.getId());
+			votes.forEach(v -> {
+				this.gameNightInstanceBoardGameVoteRepository.delete(v.getId());
+			});
+			this.gameNightInstanceBoardGameRepository.delete(g);
+		});
+		
+		List<GameNightInstanceUser> users = this.gameNightInstanceUserRepository.findAllByIdGameNightInstanceId(instanceId);
+		users.forEach(u -> this.gameNightInstanceUserRepository.delete(u));
+		
+		this.gameNightInstanceRepository.delete(instance);
+	}
+
 	private List<Integer> retrieveVotes(GameNightInstanceBoardGame game) {
 		List<GameNightInstanceBoardGameVote> votes = this.votesRepository.findAllByGameIdOrderByUserIdAsc(game.getId());
 		return votes.stream()

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import model.GameNight;
@@ -14,6 +15,7 @@ import model.GameNightInstance;
 import model.GameNightInstanceState;
 import model.GameNightUser;
 import model.User;
+import model.UserRole;
 import repository.IGameNightRepository;
 import repository.IGameNightUserRepository;
 import viewmodel.game.GameViewModel;
@@ -88,4 +90,22 @@ public class GameNightService implements IGameNightService {
 		
 		gameNightUserRepository.save(gameNightUser);
 	}
+
+	@Override
+	public void delete(String id) {
+		String currentUserName = this.userService.getCurrentUsername();
+		GameNight gameNight = this.gameNightRepository.findById(id);
+		UserDetails userDetails = this.userService.loadUserByUsername(currentUserName);
+		
+		if(!userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equalsIgnoreCase(UserRole.ROLE_ADMIN.toString()))) {
+			throw new RuntimeException("Unauthorized");
+		}
+		
+		this.gameNightInstanceService.deleteAllForGameNight(gameNight.getId());
+		
+		List<GameNightUser> users = this.gameNightUserRepository.findAllByGameNightId(id);
+		this.gameNightUserRepository.delete(users);
+		
+		this.gameNightRepository.delete(gameNight);
+	}	
 }

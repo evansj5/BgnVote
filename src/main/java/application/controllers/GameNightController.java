@@ -32,4 +32,9 @@ public class GameNightController {
 	public GameNightViewModel create(@RequestBody GameNightViewModel gameNightViewModel) {
 		return this.gameNightService.create(gameNightViewModel);
 	}
+	
+	@RequestMapping(path="/{id}", method = RequestMethod.DELETE) 
+	public void delete(@PathVariable String id) {
+		this.gameNightService.delete(id);
+	}
 }

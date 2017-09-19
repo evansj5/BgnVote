@@ -9,5 +9,6 @@ public interface IGameNightService {
 	List<GameNightViewModel> getAll();
 	GameNightViewModel get(String id, boolean includeGames);
 	GameNightViewModel create(GameNightViewModel gameNight);
-	List<GameNightUser> getUsersForGameNight(String gameNightId) ;
+	List<GameNightUser> getUsersForGameNight(String gameNightId);
+	void delete(String id);
 }

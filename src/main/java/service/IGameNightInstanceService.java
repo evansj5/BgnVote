@@ -24,4 +24,6 @@ public interface IGameNightInstanceService {
 	void addVotes(VotesDto votes);
 	
 	GameNightInstanceResultsDto getVotingResults(String gameNightInstanceId);
+	
+	void deleteAllForGameNight(String id);
 }

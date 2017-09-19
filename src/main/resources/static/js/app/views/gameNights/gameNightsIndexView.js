@@ -17,10 +17,16 @@ define([
 	GameNightsIndexTemplate
 ) {
 	var GameNightIndexView = Backbone.View.extend({
+		events : {
+			'click .deleteGameNight': 'deleteGameNight'
+		},
+		
 		initialize : function() {
 			this.collection = new GameNightCollection();
 			this.collection.bind("update", _.bind(this.render, this));
 			this.collection.fetch();
+			_.bindAll(this, "deleteGameNight");
+			
 		},
 		render : function() {
 			var template = _.template(GameNightsIndexTemplate);
@@ -32,6 +38,15 @@ define([
 				"order" : [ [ 1, 'desc' ] ]
 			});
 		},
+		
+		deleteGameNight: function (event) {
+			event.preventDefault();
+			var id = event.currentTarget.parentElement.parentElement.attributes['data-id'].value;
+			var model = this.collection.get(id);
+			model.destroy().done(function () {
+				Backbone.history.loadUrl();
+			});
+		}
 	});
 	// Above we have passed in jQuery, Underscore and Backbone
 	// They will not be accessible in the global scope
