@@ -63,7 +63,7 @@ define([
 					var model = new GameNightInstanceModel({ id: id});
 					model.fetch({
 						success: function (model) {
-							var gameNightInstanceView = new GameNightInstanceView(model);
+							var gameNightInstanceView = new GameNightInstanceView(app_router, model);
 							gameNightInstanceView.render();
 						}
 					});					
@@ -110,6 +110,8 @@ define([
 				});
 
 				Backbone.history.start();
+				
+				return app_router;
 			};
 
 			return {

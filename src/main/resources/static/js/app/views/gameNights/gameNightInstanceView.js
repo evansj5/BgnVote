@@ -6,14 +6,12 @@ define([
   'app/components/boardGameNominationComponent',
   'app/components/gameNightRsvpComponent',
   'text!./templates/gameNightInstanceTemplate.html',
-  'app/router',
   'app/components/votingComponent',
   'app/components/displayVotesComponent'
 ], function($, _, Backbone, 
 		BoardGameNominationComponent, 
 		RsvpComponent, 
 		GameNightInstanceTemplate,
-		router,
 		VotingComponent,
 		DisplayVotesComponent){
   // Above we have passed in jQuery, Underscore and Backbone
@@ -32,13 +30,16 @@ define([
 		
 		displayVotesComponent: null,
 		
-		initialize(model) {
+		router: null,
+		
+		initialize(router, model) {
 			this.model = model;
 			_.bindAll(this, "confirmRsvp");
 			_.bindAll(this, "declineRsvp");
 			_.bindAll(this, "sendRsvp");
 			_.bindAll(this, "votesSubmitted");
 			_.extend(this, Backbone.Events);
+			this.router = router;
 		},
 		
 		render: function () {
@@ -119,12 +120,12 @@ define([
 			$.get("/rest/api/gameNightInstance/" + this.model.get("id") + "/rsvp", {
 				coming: coming
 			}).done(function () {
-				router.navigate("gameNightInstance/" + this.model.get("id"), {trigger:true});
+				Backbone.history.loadUrl();
 			}.bind(this));
 		},
 		
 		votesSubmitted: function () {
-			router.navigate("gameNightInstance/" + this.model.get("id"), {trigger: true});
+			Backbone.history.loadUrl();
 		}
 	});
 	

@@ -109,7 +109,9 @@ define([
 				}]);
 			}.bind(this));
 			
-			collection.updateAll();
+			collection.updateAll().done(function () {
+				Backbone.history.loadUrl();
+			});
 		}		
 	});
 	// Above we have passed in jQuery, Underscore and Backbone

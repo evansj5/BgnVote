@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Transient;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -52,6 +53,9 @@ public class User implements UserDetails{
 	
 	@OneToMany(mappedBy = "user")
 	private List<GameNightInstanceBoardGame> nominatedBoardGames;
+	
+	@Transient
+	private Collection<? extends GrantedAuthority> authorities;
 
 	public Integer getId() {
 		return id;
@@ -133,11 +137,15 @@ public class User implements UserDetails{
 		this.nominatedBoardGames = nominatedBoardGames;
 	}
 
+	@Transient
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<? extends GrantedAuthority> authorities = Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN"));
-		
+	public Collection<? extends GrantedAuthority> getAuthorities() {		
 		return authorities;
+	}
+	
+	@Transient
+	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+		this.authorities = authorities;
 	}
 
 	@Override

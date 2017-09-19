@@ -129,9 +129,15 @@ public class GameNightInstanceService implements IGameNightInstanceService {
 		int userId = userService.getCurrentUser().getId();
 		user.setId(userId);
 		
+		List<GameNightInstanceBoardGame> games = 
+				gameNightInstanceBoardGameRepository.findAllByGameNightInstanceId(domainModels.stream().findFirst().get().getGameNightInstance().getId());
+		
 		domainModels.forEach(gnibg -> {
 			gnibg.setUser(user);
-			gameNightInstanceBoardGameRepository.save(gnibg);
+			
+			if(!games.stream().anyMatch(g -> g.getBoardGameBggId() == gnibg.getBoardGameBggId())) {
+				gameNightInstanceBoardGameRepository.save(gnibg);
+			}			
 		});
 		
 		GameNightInstanceUserId id = new GameNightInstanceUserId(userId, nominations.stream().findFirst().orElse(null).getGameNightInstanceId()); 

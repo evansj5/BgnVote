@@ -8,6 +8,7 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,7 +17,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import model.User;
+import model.UserRole;
+import model.UserRoleModel;
 import repository.UserRepository;
+import repository.UserRoleRepository;
 import viewmodel.user.UserViewModel;
 
 @Component
@@ -27,6 +31,9 @@ public class UserService implements IUserService{
 	
 	@Autowired
 	DozerBeanMapper mapper;
+	
+	@Autowired
+	UserRoleRepository userRoleRepository;
 	
 	@Override
 	public UserViewModel getCurrentUser() {
@@ -56,6 +63,12 @@ public class UserService implements IUserService{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = this.userRepository.findOneByUsername(username);
+		
+		List<SimpleGrantedAuthority> roles = this.userRoleRepository.findAllByUsername(username)
+				.stream()
+				.map(r -> new SimpleGrantedAuthority(r.getRole().toString()))
+				.collect(Collectors.toList());		
+		user.setAuthorities(roles);
 		return user;
 	}
 	

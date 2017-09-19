@@ -7,7 +7,8 @@ define([
 	'text!./templates/scheduleGameNightTemplate.html',
 	'app/models/gameNightModel',
 	'app/components/userListComponent',
-	'app/collections/allUsersCollection'
+	'app/collections/allUsersCollection',
+	'app/router'
 ], function(
 	$,
 	jqueryUi,
@@ -16,7 +17,8 @@ define([
 	ScheduleGameNightTemplate,
 	GameNightModel,
 	UsersListComponent,
-	UsersCollection
+	UsersCollection,
+	router
 ) {
 	var ScheduleGameNightView = Backbone.View.extend({
 		el: $("#page"),
