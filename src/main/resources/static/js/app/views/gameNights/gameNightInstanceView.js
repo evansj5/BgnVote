@@ -72,10 +72,11 @@ define([
 		handleVoting: function () {
 			this.votingComponent = new VotingComponent({
 				gameNightInstanceId: this.model.get('id'),
+				voted: this.model.get('voted'),
 				el: '#view'
 			});
 			
-			this.votingComponent.on("votesSubmitted", this.votesSubmitted);
+			this.votingComponent.on("votesSubmitted", this.votesSubmitted);	
 		},
 		
 		handleWaitingForRsvp: function () {
