@@ -132,6 +132,13 @@ public class GameNightInstanceService implements IGameNightInstanceService {
 		int userId = userService.getCurrentUser().getId();
 		user.setId(userId);
 		
+		GameNightInstanceUser userInfo = this.getUserInfoForGameNightInstance(nominations.stream().findFirst().get().getGameNightInstanceId());
+		
+		if(userInfo.hasNominated()) {
+			// do something here...
+			return;
+		}
+		
 		List<GameNightInstanceBoardGame> games = 
 				gameNightInstanceBoardGameRepository.findAllByGameNightInstanceId(domainModels.stream().findFirst().get().getGameNightInstance().getId());
 		
@@ -159,9 +166,10 @@ public class GameNightInstanceService implements IGameNightInstanceService {
 		
 		List<GameNightInstanceUser> users = gameNightInstanceUserRepository.findAllByIdGameNightInstanceId(id.getGameNightInstanceId());
 		
-		if(users != null && users.stream().allMatch(u -> u.hasNominated())) {
+		if(users != null && users.stream().allMatch(u -> u.hasNominated() || (u.hasRsvpd() && !u.isComing()))) {
 			updateState(id.getGameNightInstanceId(), GameNightInstanceState.VOTING);
 		}
+		this.checkIfNominatingIsFinished(id.getGameNightInstanceId());
 	}
 	
 	public void rsvp(String gameNightInstanceId, boolean coming) {
@@ -171,6 +179,8 @@ public class GameNightInstanceService implements IGameNightInstanceService {
 		userInfo.setComing(coming);
 		
 		this.gameNightInstanceUserRepository.save(userInfo);
+		
+		this.checkIfNominatingIsFinished(gameNightInstanceId);
 	}
 	
 	public GameNightInstanceUser getUserInfoForGameNightInstance(String gameNightInstanceId) {
@@ -219,6 +229,17 @@ public class GameNightInstanceService implements IGameNightInstanceService {
 		if(allVoted) {
 			updateState(gameNightInstanceId, GameNightInstanceState.FINALIZED);
 			calculateGameStats(gameNightInstanceId);
+		}
+	}
+	
+	private void checkIfNominatingIsFinished(String gameNightInstanceId) {
+		List<GameNightInstanceUser> users = this.gameNightInstanceUserRepository.findAllByIdGameNightInstanceId(gameNightInstanceId);
+		
+		boolean allRsvpd = users.stream()
+				.allMatch(user -> (user.hasRsvpd() && !user.isComing()) || user.hasNominated());
+		
+		if(allRsvpd) {
+			updateState(gameNightInstanceId, GameNightInstanceState.VOTING);
 		}
 	}
 	
