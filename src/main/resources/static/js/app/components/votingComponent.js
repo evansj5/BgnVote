@@ -23,6 +23,8 @@ define([
   	
   	gameNightInstanceId: null,
   	
+  	voted: false,
+  	
   	events: {
   		'click .submit-vote': 'submitVote'
   	},
@@ -30,6 +32,7 @@ define([
   	initialize: function (options) {
   		this.el = options.el;
   		this.gameNightInstanceId = options.gameNightInstanceId;
+  		this.voted = options.voted;
   		this.gameList = new NominatedGamesCollection();
   		this.gameList.fetch(this.gameNightInstanceId).done(function () {  			
   			this.gameListComponent = new GameListComponent({
@@ -49,10 +52,10 @@ define([
   	
   	render: function () {
   		var template = _.template(VotingComponentTemplate);
-  		var compiledTemplate = template();
+  		var compiledTemplate = template({voted: this.voted});
   		$(this.el).html(compiledTemplate);
   		
-  		if(this.gameListComponent) {
+  		if(this.gameListComponent && !this.voted) {
   			this.gameListComponent.render();
   		}
   	},

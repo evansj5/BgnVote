@@ -1,5 +1,11 @@
 <h1>Voting</h1>
+
+<% if(!voted) { %>
 Drag and drop games in order of preference (top being most preferred).
+
 <div id="game-list">
 </div>
 <button class="submit-vote">Submit Vote</button>
+<% } else { %>
+Waiting for everyone to finish voting.
+<% } %>
