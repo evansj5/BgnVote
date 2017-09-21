@@ -7,13 +7,15 @@
 	<% }); %>
 	<th>Average</th>
 </thead>
-<% _.each(model.get('games'), function(game) { %>
-	<tr>
-		<td><%= game.name %></td>
-		<% _.each(game.votes, function (vote) { %>
-			<td><%= vote %></td>
-		<% }); %>
-		<td><%= game.averageVote %></td>
-	</tr>
-<% }); %>
+<tbody>
+	<% _.each(model.get('games'), function(game) { %>
+		<tr>
+			<td><%= game.name %></td>
+			<% _.each(game.votes, function (vote) { %>
+				<td><%= vote %></td>
+			<% }); %>
+			<td><%= game.averageVote %></td>
+		</tr>
+	<% }); %>
+</tbody>
 </table>
