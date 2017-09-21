@@ -29,6 +29,20 @@
    				<%= options.selectButtonLabel %>
    			</button>
  		<% } %>
+ 		<% if(options.sortable) { %>
+	 		<div class="column is-2">
+	 			<a href="#" class="up-arrow">
+		 			<span class="icon is-large">
+		 				<i class="fa fa-large fa-arrow-up"></i>
+		 			</span>
+	 			</a>
+	 			<a href="#" class="down-arrow">
+		 			<span class="icon is-large">
+		 				<i class="fa fa-large fa-arrow-down"></i>
+		 			</span>
+	 			</a>
+	 		</div>
+ 		<% } %>
 	</li>
   <% }); %>
 </ul>

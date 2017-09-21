@@ -5,10 +5,15 @@
     </head>
     <body>
     	<div th:fragment="header">
-			<a href = "#">Game Nights</a> |
-			<a href = "#profile">My Profile</a>
-			<a sec:authorize="hasRole('ROLE_ADMIN')" href="#admin">Admin</a>
-			<span sec:authentication="name"></span>
+	    	<div class="navbar is-primary">
+		    	<div class="navbar-menu">
+					<a class="navbar-item" href = "#">Game Nights</a> 
+					<a class="navbar-item" href = "#profile">My Profile</a>
+					<a class="navbar-item" sec:authorize="hasRole('ROLE_ADMIN')" href="#admin">Admin</a>
+					<span sec:authentication="name" class="navbar-end"></span>
+				</div>
+				<div class="navbar-burger"></div>
+			</div>
 		</div>
     </body> 
 </html>

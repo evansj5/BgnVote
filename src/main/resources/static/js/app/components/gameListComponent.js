@@ -24,6 +24,8 @@ define([
 			_.bindAll(this, "filter");
 			_.bindAll(this, "moveToSelected");
 			_.bindAll(this, "confirmSelections");
+			_.bindAll(this, "moveUp");
+			_.bindAll(this, "moveDown");
 			_.extend(this, Backbone.Events);
 		},
 		
@@ -41,6 +43,8 @@ define([
 			
 			if(this.options.sortable) {
 				$('#game-list-sortable').sortable();
+				$('.up-arrow').on("click", this.moveUp);
+				$('.down-arrow').on("click", this.moveDown);
 			}
 			
 			if(this.options.searchable) {
@@ -105,6 +109,32 @@ define([
 			});
 			
 			return orderedList;
+		},
+		
+		moveUp: function (event) {
+			event.preventDefault();
+			var liElement = $(event.currentTarget.parentElement.parentElement);
+			
+			if(liElement.prev().length > 0) {
+				var previous = liElement.prev()[0];
+				liElement.detach();
+				liElement.insertBefore(previous);
+				$('#game-list-sortable').trigger("sortupdate");
+			}
+			
+			
+		},
+		
+		moveDown: function (event) {
+			event.preventDefault();
+			var liElement = $(event.currentTarget.parentElement.parentElement);
+			
+			if(liElement.next().length > 0) {
+				var next = liElement.next()[0];
+				liElement.detach();
+				liElement.insertAfter(next);
+				$('#game-list-sortable').trigger("sortupdate");
+			}
 		}
 	});
 
