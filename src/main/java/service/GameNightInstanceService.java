@@ -276,6 +276,7 @@ public class GameNightInstanceService implements IGameNightInstanceService {
 		List<GameNightInstanceUser> users = this.gameNightInstanceUserRepository.findAllByIdGameNightInstanceIdOrderByIdUserIdAsc(gameNightInstanceId);
 		
 		List<UserViewModel> userViewModels = this.userService.getAllSortByIdAsc(users.stream()
+				.filter(user -> user.hasRsvpd() && user.isComing())
 				.map(user -> user.getId().getUserId()).collect(Collectors.toList()));
 		
 		GameNightInstanceResultsDto resultDto = new GameNightInstanceResultsDto();
