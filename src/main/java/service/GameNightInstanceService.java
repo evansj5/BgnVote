@@ -224,7 +224,7 @@ public class GameNightInstanceService implements IGameNightInstanceService {
 		List<GameNightInstanceUser> users = this.gameNightInstanceUserRepository.findAllByIdGameNightInstanceId(gameNightInstanceId);
 		
 		boolean allVoted = users.stream()
-							.allMatch(user -> user.hasVoted());
+							.allMatch(user -> user.hasVoted() || (user.hasRsvpd() && !user.isComing()));
 		
 		if(allVoted) {
 			updateState(gameNightInstanceId, GameNightInstanceState.FINALIZED);
