@@ -42,7 +42,6 @@ define([
 			this.gameListSortable = $('#game-list-sortable');
 			
 			if(this.options.sortable) {
-				$('#game-list-sortable').sortable();
 				$('.up-arrow').on("click", this.moveUp);
 				$('.down-arrow').on("click", this.moveDown);
 			}
@@ -56,8 +55,6 @@ define([
 				$('button.selectButton').on("click", this.moveToSelected);
 				$('button.confirmSelectionsButton').on("click", this.confirmSelections);
 			}
-			
-			$('#game-list-sortable').disableSelection();
 		},
 		
 		filter: function (event) {			

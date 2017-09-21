@@ -1,6 +1,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<title></title>
+		<meta charset="utf-8"></meta>
+    	<meta name="viewport" content="width=device-width, initial-scale=1"></meta>
 		<script th:attr="data-main=@{/js/app/main.js}" th:src="@{/js/require.js}"></script>
 		<link rel="stylesheet" th:href="@{/css/jquery-ui.css}" />
 		<link rel="stylesheet" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
@@ -8,12 +10,13 @@
 		<th:block th:include="sharedHead :: head"></th:block>
 	</head>
 	<body>
-		<div class="container">
 		<th:block th:include="sharedHeader :: header"></th:block>
-			<br></br>
-			<div id="page">
-				Loading...
+		<section class="section">
+			<div class="container">
+				<div id="page">
+					Loading...
+				</div>
 			</div>
-		</div>
+		</section>
 	</body>
 </html>

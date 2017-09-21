@@ -18,9 +18,9 @@
 <ul id="game-list-sortable">
   <% _.each(games, function(game){ %>
     <li class="columns">
-    	<figure class="image column is-2">
+    	<div class="column is-2">
     		<img src='<%= game.get("thumbnail") %>' />
-    	</figure>
+    	</div>
     	<div class='gameName column is-2' data-id="<%= game.get("id") %>">
     		<%= game.get("name") %>
    		</div>

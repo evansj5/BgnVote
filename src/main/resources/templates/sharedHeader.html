@@ -6,13 +6,27 @@
     <body>
     	<div th:fragment="header">
 	    	<div class="navbar is-primary">
-		    	<div class="navbar-menu">
-					<a class="navbar-item" href = "#">Game Nights</a> 
-					<a class="navbar-item" href = "#profile">My Profile</a>
-					<a class="navbar-item" sec:authorize="hasRole('ROLE_ADMIN')" href="#admin">Admin</a>
-					<span sec:authentication="name" class="navbar-end"></span>
+	    		<div class="navbar-brand">
+		    		<a class="navbar-item" href="#">
+				      <img th:src="@{/images/die-logo.png}" alt="Board games..." width="28" height="28"></img>
+				    </a>
+	    			<button class="button navbar-burger" data-target="navMenu">
+	    				<span></span>
+	    				<span></span>
+	    				<span></span>
+	    			</button>
+	    		</div>
+		    	<div class="navbar-menu" id="navMenu">
+		    		<div class="navbar-start">
+			    		<a class="navbar-item" href = "#">Game Nights</a> 
+						<a class="navbar-item" href = "#profile">My Profile</a>
+						<a class="navbar-item" sec:authorize="hasRole('ROLE_ADMIN')" href="#admin">Admin</a>	
+		    		</div>					
+					<div class="navbar-end">
+						<div sec:authentication="name"></div>
+					</div>					
 				</div>
-				<div class="navbar-burger"></div>
+							
 			</div>
 		</div>
     </body> 
