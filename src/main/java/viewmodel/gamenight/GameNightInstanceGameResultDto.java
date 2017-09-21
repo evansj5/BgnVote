@@ -1,20 +1,21 @@
 package viewmodel.gamenight;
 
-import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class GameNightInstanceGameResultDto {
 	private String name;
-	private List<Integer> votes;
+	private Map<Integer, Integer> votes;
 	private double averageVote;
 	
 	public GameNightInstanceGameResultDto() {}
 
-	public List<Integer> getVotes() {
+	public Map<Integer, Integer> getVotes() {
 		return votes;
 	}
 
-	public void setVotes(List<Integer> votes) {
-		this.votes = votes;
+	public void setVotes(Map<Integer, Integer> votes) {
+		this.votes = new TreeMap<>(votes);
 	}
 
 	public double getAverageVote() {

@@ -1,6 +1,7 @@
 package service;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -280,7 +281,7 @@ public class GameNightInstanceService implements IGameNightInstanceService {
 				.map(user -> user.getId().getUserId()).collect(Collectors.toList()));
 		
 		GameNightInstanceResultsDto resultDto = new GameNightInstanceResultsDto();
-		
+		userViewModels.sort(Comparator.comparingInt(UserViewModel::getId));
 		resultDto.setUsers(userViewModels);
 		
 		List<GameNightInstanceGameResultDto> gameResultDtos = gameNightInstanceGames.stream()
@@ -293,6 +294,8 @@ public class GameNightInstanceService implements IGameNightInstanceService {
 				return gameResult;
 			})
 			.collect(Collectors.toList());
+		
+		gameResultDtos.sort(Comparator.comparingDouble(GameNightInstanceGameResultDto::getAverageVote));
 		
 		resultDto.setGames(gameResultDtos);
 		
@@ -325,10 +328,13 @@ public class GameNightInstanceService implements IGameNightInstanceService {
 		this.gameNightInstanceRepository.delete(instance);
 	}
 
-	private List<Integer> retrieveVotes(GameNightInstanceBoardGame game) {
+	private Map<Integer, Integer> retrieveVotes(GameNightInstanceBoardGame game) {
 		List<GameNightInstanceBoardGameVote> votes = this.votesRepository.findAllByGameIdOrderByUserIdAsc(game.getId());
-		return votes.stream()
-				.map(vote -> vote.getVote())
-				.collect(Collectors.toList());
+		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		
+		for (GameNightInstanceBoardGameVote vote : votes) {
+			map.put(vote.getUser().getId(), vote.getVote());
+		}
+		return map;
 	}
 }
