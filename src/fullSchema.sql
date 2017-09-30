@@ -33,6 +33,9 @@ CREATE TABLE public.users
   last_name text,
   enabled boolean,
   bgg_username text,
+  vote_reminder_email boolean NOT NULL DEFAULT false,
+  rsvp_reminder_email boolean NOT NULL DEFAULT false,
+  nominate_reminder_email boolean NOT NULL DEFAULT false
   CONSTRAINT "USERS_pkey" PRIMARY KEY (id),
   CONSTRAINT "USERS_email_key" UNIQUE (email),
   CONSTRAINT "USERS_username_key" UNIQUE (username)
@@ -47,7 +50,7 @@ CREATE SEQUENCE public.user_roles_user_role_id_seq
   MAXVALUE 9223372036854775807
   START 1
   CACHE 1;
-  
+
 -- Table: public.user_roles
 
 -- DROP TABLE public.user_roles;
@@ -65,7 +68,7 @@ CREATE TABLE public.user_roles
 WITH (
   OIDS=FALSE
 );
-  
+
 -- Table: public.game_night
 
 -- DROP TABLE public.game_night;
@@ -80,7 +83,7 @@ CREATE TABLE public.game_night
 WITH (
   OIDS=FALSE
 );
-  
+
 -- Table: public.game_night_user
 
 -- DROP TABLE public.game_night_user;
@@ -102,7 +105,7 @@ CREATE TABLE public.game_night_user
 WITH (
   OIDS=FALSE
 );
-  
+
 -- Table: public.game_night_instance
 
 -- DROP TABLE public.game_night_instance;
@@ -121,7 +124,7 @@ CREATE TABLE public.game_night_instance
 WITH (
   OIDS=FALSE
 );
- 
+
 -- Table: public.game_night_instance_user
 
 -- DROP TABLE public.game_night_instance_user;
@@ -168,7 +171,7 @@ CREATE TABLE public.game_night_instance_board_game
 WITH (
   OIDS=FALSE
 );
-  
+
 -- Table: public.game_night_instance_board_game_vote
 
 -- DROP TABLE public.game_night_instance_board_game_vote;
@@ -207,4 +210,3 @@ CREATE TABLE public.registration_key
 WITH (
   OIDS=FALSE
 );
-

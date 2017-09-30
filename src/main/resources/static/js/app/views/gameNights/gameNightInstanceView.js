@@ -7,13 +7,15 @@ define([
   'app/components/gameNightRsvpComponent',
   'text!./templates/gameNightInstanceTemplate.html',
   'app/components/votingComponent',
-  'app/components/displayVotesComponent'
+  'app/components/displayVotesComponent',
+  'app/models/gameNightInstanceModel'
 ], function($, _, Backbone, 
 		BoardGameNominationComponent, 
 		RsvpComponent, 
 		GameNightInstanceTemplate,
 		VotingComponent,
-		DisplayVotesComponent){
+		DisplayVotesComponent,
+		GameNightInstanceModel){
   // Above we have passed in jQuery, Underscore and Backbone
   // They will not be accessible in the global scope
 	
@@ -30,36 +32,40 @@ define([
 		
 		displayVotesComponent: null,
 		
-		router: null,
-		
-		initialize(router, model) {
-			this.model = model;
+		initialize(id) {
+			this.id = id;
 			_.bindAll(this, "confirmRsvp");
 			_.bindAll(this, "declineRsvp");
 			_.bindAll(this, "sendRsvp");
 			_.bindAll(this, "votesSubmitted");
+			_.bindAll(this, "render");
+			_.bindAll(this, "handleWaitingForRsvp");
 			_.extend(this, Backbone.Events);
-			this.router = router;
 		},
 		
 		render: function () {
-			var template = _.template(GameNightInstanceTemplate);
-			var compiledTemplate = template({
-				instance : this.model
+			this.model = new GameNightInstanceModel({ id: this.id});
+			this.model.fetch({
+				success: function (model) {			
+					var template = _.template(GameNightInstanceTemplate);
+					var compiledTemplate = template({
+						instance : this.model
+					});
+					this.$el.html(compiledTemplate);
+					
+					switch (model.get("state")) {
+					case "WAITING_FOR_RSVP":
+						this.handleWaitingForRsvp();
+						break;
+					case "VOTING":
+						this.handleVoting();
+						break;
+					case "FINALIZED":
+						this.handleDisplayVotes();
+						break;
+					}
+				}.bind(this)
 			});
-			this.$el.html(compiledTemplate);
-			
-			switch (this.model.get("state")) {
-			case "WAITING_FOR_RSVP":
-				this.handleWaitingForRsvp();
-				break;
-			case "VOTING":
-				this.handleVoting();
-				break;
-			case "FINALIZED":
-				this.handleDisplayVotes();
-				break;
-			}
 		},
 		
 		handleDisplayVotes: function () {
@@ -87,6 +93,7 @@ define([
 							model: this.model,
 							el: '#view'
 						});
+						this.nominationComponent.on("confirmSelections", this.render);
 					}
 					
 					this.nominationComponent.render();

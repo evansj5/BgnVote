@@ -41,6 +41,15 @@ public class User implements UserDetails{
 	@Column(name="bgg_username")
 	private String bggUsername;
 	
+	@Column(name = "vote_reminder_email")
+	private boolean voteReminderEmail;
+	
+	@Column(name = "rsvp_reminder_email")
+	private boolean rsvpReminderEmail;
+	
+	@Column(name = "nominate_reminder_email")
+	private boolean nominateReminderEmail;
+	
 	private String username;
 	
 	private String password;
@@ -160,5 +169,29 @@ public class User implements UserDetails{
 	@Override
 	public boolean isCredentialsNonExpired() {
 		return enabled;
+	}
+
+	public boolean isVoteReminderEmail() {
+		return voteReminderEmail;
+	}
+
+	public void setVoteReminderEmail(boolean voteReminderEmail) {
+		this.voteReminderEmail = voteReminderEmail;
+	}
+
+	public boolean isRsvpReminderEmail() {
+		return rsvpReminderEmail;
+	}
+
+	public void setRsvpReminderEmail(boolean rsvpReminderEmail) {
+		this.rsvpReminderEmail = rsvpReminderEmail;
+	}
+
+	public boolean isNominateReminderEmail() {
+		return nominateReminderEmail;
+	}
+
+	public void setNominateReminderEmail(boolean nominateReminderEmail) {
+		this.nominateReminderEmail = nominateReminderEmail;
 	}	
 }

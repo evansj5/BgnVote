@@ -109,8 +109,8 @@ define([
 				}]);
 			}.bind(this));
 			
-			collection.updateAll().done(function () {
-				Backbone.history.loadUrl();
+			collection.updateAll(function () {
+				this.trigger("confirmSelections");
 			});
 		}		
 	});

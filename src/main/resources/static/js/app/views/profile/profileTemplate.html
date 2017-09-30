@@ -1,3 +1,16 @@
 <div>
-  <div><%= profile.get("user").bggUsername %></div>
-<div>
+	<div><%= profile.get("user").bggUsername %></div>
+  	<label class="checkbox">
+  		<input type="checkbox" class="rsvpReminder" <% if (profile.get("user").rsvpReminderEmail) { %>checked<% } %>/>
+  		Send me email reminders to RSVP
+	</label>
+	<label class="checkbox">
+		<input type="checkbox" class="voteReminder" <% if (profile.get("user").voteReminderEmail) { %>checked<% } %>/>
+		Send me email reminders to vote
+	</label>
+	<label class="checkbox" >
+		<input type="checkbox" class="nominateReminder" <% if (profile.get("user").nominateReminderEmail) { %>checked<% } %>/>
+		Send me email reminders to nominate
+	</label>
+	<button class="saveButton">Save</button>
+</div>

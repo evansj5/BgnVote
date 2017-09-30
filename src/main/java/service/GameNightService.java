@@ -51,6 +51,9 @@ public class GameNightService implements IGameNightService {
 		GameNight gameNightModel = gameNightRepository.findOne(id);
 		GameNightViewModel gameNight = mapper.map(gameNightModel, GameNightViewModel.class);
 		
+		GameNightUser gameNightUser = gameNightUserRepository.findOneByGameNightIdAndUserId(id, userService.getCurrentUser().getId());
+		
+		gameNight.setOwned(gameNightUser.isOwner());
 		if(includeGames) {
 			// TODO		
 		}		

@@ -8,6 +8,12 @@ public class UserViewModel {
 	private String lastName;
 	
 	private String bggUsername;
+	
+	private boolean voteReminderEmail;
+	
+	private boolean rsvpReminderEmail;
+	
+	private boolean nominateReminderEmail;
 
 	public Integer getId() {
 		return id;
@@ -40,6 +46,29 @@ public class UserViewModel {
 	public void setBggUsername(String bggUsername) {
 		this.bggUsername = bggUsername;
 	}
-	
+
+	public boolean isVoteReminderEmail() {
+		return voteReminderEmail;
+	}
+
+	public void setVoteReminderEmail(boolean voteReminderEmail) {
+		this.voteReminderEmail = voteReminderEmail;
+	}
+
+	public boolean isRsvpReminderEmail() {
+		return rsvpReminderEmail;
+	}
+
+	public void setRsvpReminderEmail(boolean rsvpReminderEmail) {
+		this.rsvpReminderEmail = rsvpReminderEmail;
+	}
+
+	public boolean isNominateReminderEmail() {
+		return nominateReminderEmail;
+	}
+
+	public void setNominateReminderEmail(boolean nominateReminderEmail) {
+		this.nominateReminderEmail = nominateReminderEmail;
+	}
 	
 }

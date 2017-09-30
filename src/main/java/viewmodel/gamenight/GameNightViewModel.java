@@ -15,6 +15,8 @@ public class GameNightViewModel {
 	
 	private List<Integer> invitedUsers;
 	
+	private boolean owned;
+	
 	public String getId() {
 		return id;
 	}
@@ -45,5 +47,13 @@ public class GameNightViewModel {
 
 	public void setInvitedUsers(List<Integer> invitedUsers) {
 		this.invitedUsers = invitedUsers;
-	}	
+	}
+
+	public boolean isOwned() {
+		return owned;
+	}
+
+	public void setOwned(boolean owned) {
+		this.owned = owned;
+	}
 }

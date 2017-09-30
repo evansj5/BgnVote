@@ -60,13 +60,8 @@ define([
 				});
 				
 				app_router.on("route:gameNightInstance", function (id) {
-					var model = new GameNightInstanceModel({ id: id});
-					model.fetch({
-						success: function (model) {
-							var gameNightInstanceView = new GameNightInstanceView(app_router, model);
-							gameNightInstanceView.render();
-						}
-					});					
+						var gameNightInstanceView = new GameNightInstanceView(id);
+						gameNightInstanceView.render();
 				});
 
 				app_router.on('route:defaultAction', function() {

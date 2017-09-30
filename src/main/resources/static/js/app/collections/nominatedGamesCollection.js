@@ -11,11 +11,12 @@ define([
 		model: NominatedGameModel,
 		url: 'rest/api/gameNightInstance/nominate',
 		
-		updateAll: function () {
+		updateAll: function (successCallback) {
 			var collection = this;
 			options = {
 					success: function (model, resp, xhr) {
 						collection.reset(model);
+						successCallback();
 					}
 			};
 			

@@ -6,6 +6,7 @@ import model.GameNightInstance;
 import viewmodel.gamenight.GameNightInstanceResultsDto;
 import viewmodel.gamenight.GameNightInstanceViewModel;
 import viewmodel.gamenight.NominatedGameDto;
+import viewmodel.gamenight.ScheduleGameNightInstanceDto;
 import viewmodel.gamenight.VotesDto;
 
 public interface IGameNightInstanceService {
@@ -26,4 +27,6 @@ public interface IGameNightInstanceService {
 	GameNightInstanceResultsDto getVotingResults(String gameNightInstanceId);
 	
 	void deleteAllForGameNight(String id);
+	
+	GameNightInstance scheduleNewInstance(ScheduleGameNightInstanceDto scheduleDto);
 }

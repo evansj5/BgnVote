@@ -5,14 +5,16 @@ define([
 	'backbone', // lib/backbone/backbone
 	'text!./templates/gameNightTemplate.html', 
 	'app/models/gameNightModel',
-	'app/collections/gameNightInstanceCollection'
+	'app/collections/gameNightInstanceCollection',
+	'app/models/scheduleGameNightInstanceModel'
 ], function(
 	$, 
 	_,
 	Backbone, 
 	GameNightTemplate, 
 	GameNight,
-	GameNightInstanceCollection
+	GameNightInstanceCollection,
+	ScheduleGameNightInstanceModel
 ) {
 	var GameNightView = Backbone.View.extend({
 		el : $('#page'),
@@ -21,11 +23,18 @@ define([
 		
 		instanceModels: null,
 		
+		datepicker: null,
+		
+		events: {
+			"click .scheduleNewGameNight" : "scheduleGameNight"
+		},
+		
 		initialize : function(model) {
 			this.model = model;
 			this.collection = new GameNightInstanceCollection();
 			this.collection.bind("update", _.bind(this.render, this));
 			this.collection.fetchByGameNightId(this.model.get("id"), function () {});
+			_.bindAll(this, "scheduleGameNight");
 		},
 
 		render : function() {
@@ -35,6 +44,20 @@ define([
 				instanceModels: this.collection.models
 			});
 			this.$el.html(compiledTemplate);
+			
+			this.datepicker = $('#startDate');
+			this.datepicker.datepicker();
+		},
+		
+		scheduleGameNight: function (event) {
+			event.preventDefault();
+			var startDate = new Date(this.datepicker.val());
+			var id = this.model.get("id");
+			
+			var scheduleNewModel = new ScheduleGameNightInstanceModel();
+			scheduleNewModel.set("gameNightId", id);
+			scheduleNewModel.set("startDate", startDate);
+			scheduleNewModel.save();
 		}
 	});
 	// Above we have passed in jQuery, Underscore and Backbone

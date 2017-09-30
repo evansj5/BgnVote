@@ -3,6 +3,7 @@ package model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -34,11 +35,11 @@ public class GameNightInstance {
 	@Column(name = "state")
 	private GameNightInstanceState state;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name = "game_night_id")
 	private GameNight gameNight;
 	
-	@OneToMany(mappedBy = "gameNightInstance")
+	@OneToMany(mappedBy = "gameNightInstance", cascade=CascadeType.ALL)
 	private List<GameNightInstanceBoardGame> nominatedBoardGames;
 
 	public GameNightInstance(String id, String gameNightId, Date date, GameNightInstanceState state) {

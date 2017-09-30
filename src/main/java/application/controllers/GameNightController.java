@@ -9,14 +9,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import service.IGameNightInstanceService;
 import service.IGameNightService;
 import viewmodel.gamenight.GameNightViewModel;
+import viewmodel.gamenight.ScheduleGameNightInstanceDto;
 
 @RestController
 @RequestMapping(path="/rest/api/gameNight")
 public class GameNightController {
 	@Autowired
 	IGameNightService gameNightService;
+	
+	@Autowired
+	IGameNightInstanceService gameNightInstanceService;
 	
 	@RequestMapping(method = RequestMethod.GET, produces="application/json")
 	public List<GameNightViewModel> get() {
@@ -36,5 +41,10 @@ public class GameNightController {
 	@RequestMapping(path="/{id}", method = RequestMethod.DELETE) 
 	public void delete(@PathVariable String id) {
 		this.gameNightService.delete(id);
+	}
+	
+	@RequestMapping(path="/schedule", method = RequestMethod.POST)
+	public void scheduleNewInstance(@RequestBody ScheduleGameNightInstanceDto scheduleDto) {
+		this.gameNightInstanceService.scheduleNewInstance(scheduleDto);
 	}
 }

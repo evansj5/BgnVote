@@ -18,4 +18,9 @@ public class UserProfileController {
 	public ProfileViewModel get() {
 		return profileService.getMyProfile();
 	}
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public void update(ProfileViewModel profileViewModel) {
+		profileService.updateProfile(profileViewModel);
+	}
 }

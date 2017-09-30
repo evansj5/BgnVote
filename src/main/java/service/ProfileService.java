@@ -2,11 +2,14 @@ package service;
 
 import java.util.List;
 
+import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import model.BggGame;
+import model.User;
 import repository.BoardGameGeekRepository;
+import repository.UserRepository;
 import viewmodel.user.ProfileViewModel;
 import viewmodel.user.UserViewModel;
 
@@ -16,7 +19,13 @@ public class ProfileService implements IProfileService{
 	private IUserService userService;
 	
 	@Autowired
+	private UserRepository userRepository;
+	
+	@Autowired
 	private BoardGameGeekRepository bggRepository;
+	
+	@Autowired
+	private DozerBeanMapper mapper;
 	
 	/**
 	 * Gets a list of the current users games.
@@ -33,4 +42,15 @@ public class ProfileService implements IProfileService{
 		
 		return profile;
 	}
+
+	@Override
+	public void updateProfile(ProfileViewModel profile) {
+		UserViewModel user = profile.getUser();
+		User userModel = userRepository.getOne(user.getId());
+		
+		mapper.map(user, userModel);
+		userRepository.save(userModel);		
+	}
+	
+	
 }

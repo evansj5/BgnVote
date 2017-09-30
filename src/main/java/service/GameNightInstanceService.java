@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import model.BggGame;
+import model.GameNight;
 import model.GameNightInstance;
 import model.GameNightInstanceBoardGame;
 import model.GameNightInstanceBoardGameVote;
@@ -25,11 +26,13 @@ import repository.IGameNightInstanceBoardGameRepository;
 import repository.IGameNightInstanceBoardGameVoteRepository;
 import repository.IGameNightInstanceRepository;
 import repository.IGameNightInstanceUserRepository;
+import repository.IGameNightRepository;
 import repository.UserRepository;
 import viewmodel.gamenight.GameNightInstanceGameResultDto;
 import viewmodel.gamenight.GameNightInstanceResultsDto;
 import viewmodel.gamenight.GameNightInstanceViewModel;
 import viewmodel.gamenight.NominatedGameDto;
+import viewmodel.gamenight.ScheduleGameNightInstanceDto;
 import viewmodel.gamenight.VotesDto;
 import viewmodel.user.UserViewModel;
 
@@ -63,6 +66,9 @@ public class GameNightInstanceService implements IGameNightInstanceService {
 	UserRepository userRepository;
 	
 	@Autowired
+	IGameNightRepository gameNightRepository;
+	
+	@Autowired
 	DozerBeanMapper mapper;
 	
 	/* (non-Javadoc)
@@ -92,6 +98,13 @@ public class GameNightInstanceService implements IGameNightInstanceService {
 		}		
 		
 		return createdInstance;
+	}
+	
+	public GameNightInstance scheduleNewInstance(ScheduleGameNightInstanceDto scheduleDto) {
+		GameNightInstance instance = new GameNightInstance(null, scheduleDto.getGameNightId(), scheduleDto.getStartDate(), GameNightInstanceState.WAITING_FOR_RSVP);
+		GameNight gameNight = gameNightRepository.findOne(scheduleDto.getGameNightId());
+		instance.setGameNight(gameNight);
+		return this.scheduleNewInstance(instance, true);		
 	}
 	
 	@Override
