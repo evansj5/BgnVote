@@ -1,16 +1,31 @@
 <div>
-	<div><%= profile.get("user").bggUsername %></div>
-  	<label class="checkbox">
-  		<input type="checkbox" class="rsvpReminder" <% if (profile.get("user").rsvpReminderEmail) { %>checked<% } %>/>
-  		Send me email reminders to RSVP
-	</label>
-	<label class="checkbox">
-		<input type="checkbox" class="voteReminder" <% if (profile.get("user").voteReminderEmail) { %>checked<% } %>/>
-		Send me email reminders to vote
-	</label>
-	<label class="checkbox" >
-		<input type="checkbox" class="nominateReminder" <% if (profile.get("user").nominateReminderEmail) { %>checked<% } %>/>
-		Send me email reminders to nominate
-	</label>
-	<button class="saveButton">Save</button>
+	<div class="columns">
+		<h1 class="title is-1">Profile</h1>
+	</div>
+	
+	<div class="columns">
+		<h2 class="subtitle is-2">Email Options</h2>
+	</div>
+  	<div class="columns">
+	  	<label class="checkbox">
+	  		<input type="checkbox" class="rsvpReminder" <% if (profile.get("user").rsvpReminderEmail) { %>checked<% } %>/>
+	  		Send me email reminders to RSVP
+		</label>
+	</div>
+	<div class="columns">
+		<label class="checkbox">
+			<input type="checkbox" class="voteReminder" <% if (profile.get("user").voteReminderEmail) { %>checked<% } %>/>
+			Send me email reminders to vote
+		</label>
+	</div>
+	<div class="columns">
+		<label class="checkbox" >
+			<input type="checkbox" class="nominateReminder" <% if (profile.get("user").nominateReminderEmail) { %>checked<% } %>/>
+			Send me email reminders to nominate
+		</label>
+	</div>
+	<div class="columns"></div>
+	<div class="columns">
+		<button class="saveButton">Save</button>
+	</div>
 </div>
